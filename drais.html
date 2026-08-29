@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>D.R.A.I.S.Y. — AI Front Desk | GPGV</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;700&family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root{--bg:#0a0805;--elev:#14100a;--ink:#f6efe1;--dim:#b8ad97;--faint:#6b6354;--gold:#d4a942;--gold2:#f4c860;--fire:#ff4d1c;--line:rgba(212,169,66,.18);--line2:rgba(212,169,66,.4);--green:#4ade80}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter Tight',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5}
+  body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 18% 0%,rgba(255,77,28,.08),transparent 50%),radial-gradient(ellipse at 85% 100%,rgba(212,169,66,.06),transparent 50%);pointer-events:none;z-index:0}
+  .wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 24px}
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);background:rgba(10,8,5,.7);border-bottom:1px solid var(--line)}
+  .nav-in{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+  .logo{font-family:'Fraunces',serif;font-weight:600;font-size:18px}
+  .logo span{background:linear-gradient(90deg,var(--fire),var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .nav-links{display:flex;gap:22px;align-items:center;font-size:14px}
+  .nav-links a{color:var(--dim);text-decoration:none}.nav-links a:hover{color:var(--gold2)}
+  .cta{background:var(--gold);color:var(--bg);padding:9px 16px;border-radius:3px;font-weight:700;text-decoration:none;font-size:14px}
+  .back{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--faint);text-decoration:none;letter-spacing:.1em}
+  .hero{padding:80px 0 50px;text-align:center}
+  .eyebrow{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line2);border-radius:100px;padding:6px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold2);margin-bottom:24px}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--fire);box-shadow:0 0 8px var(--fire)}
+  h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(40px,7vw,80px);line-height:1;letter-spacing:-.03em;margin-bottom:20px}
+  h1 em{font-style:italic;background:linear-gradient(120deg,var(--fire),var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{font-size:19px;color:var(--dim);max-width:600px;margin:0 auto 32px;font-weight:300}
+  .hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .btn1{background:linear-gradient(135deg,var(--fire),var(--gold));color:var(--bg);padding:15px 28px;border-radius:3px;font-weight:700;text-decoration:none}
+  .btn2{border:1px solid var(--line2);color:var(--ink);padding:15px 26px;border-radius:3px;text-decoration:none}
+  .stats{display:flex;gap:40px;justify-content:center;margin-top:50px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:32px}
+  .stat .n{font-family:'Fraunces',serif;font-size:40px;color:var(--gold2);line-height:1}
+  .stat .l{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:6px}
+  section{padding:64px 0}
+  .sh{text-align:center;margin-bottom:40px}
+  .sh .k{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+  .sh h2{font-family:'Fraunces',serif;font-size:36px;margin-top:8px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+  .card{background:var(--elev);border:1px solid var(--line);border-radius:10px;padding:24px}
+  .card .ic{font-size:24px;margin-bottom:12px}
+  .card h3{font-size:17px;margin-bottom:6px}.card p{color:var(--dim);font-size:14px}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .step{border:1px solid var(--line);border-radius:10px;padding:22px;position:relative}
+  .step .num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold)}
+  .step h3{font-size:16px;margin:8px 0 4px}.step p{color:var(--dim);font-size:13.5px}
+  .pricing{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;max-width:760px;margin:0 auto}
+  .plan{background:var(--elev);border:1px solid var(--line2);border-radius:14px;padding:30px;text-align:center}
+  .plan.feat{border-color:var(--gold);box-shadow:0 0 40px -16px var(--gold)}
+  .plan .pn{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+  .plan .price{font-family:'Fraunces',serif;font-size:44px;margin:10px 0}.plan .price small{font-size:16px;color:var(--dim)}
+  .plan .setup{color:var(--dim);font-size:13px;margin-bottom:18px}
+  .plan ul{list-style:none;text-align:left;margin:18px 0}.plan li{padding:6px 0;font-size:14px;color:var(--dim)}.plan li::before{content:'✓ ';color:var(--green)}
+  form{max-width:620px;margin:0 auto;background:var(--elev);border:1px solid var(--line);border-radius:14px;padding:30px}
+  .fg{margin-bottom:16px}.fg label{display:block;font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+  .fg input,.fg select,.fg textarea{width:100%;padding:12px;background:var(--bg);border:1px solid var(--line);border-radius:6px;color:var(--ink);font-family:inherit;font-size:15px}
+  .fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--gold)}
+  .fsub{width:100%;background:linear-gradient(135deg,var(--fire),var(--gold));color:var(--bg);border:none;padding:15px;border-radius:6px;font-weight:700;font-size:16px;cursor:pointer}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  footer{text-align:center;padding:40px 0;border-top:1px solid var(--line);color:var(--faint);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em}
+  @media(max-width:600px){.nav-links{display:none}.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav><div class="nav-in">
+  <div class="logo">D.R.A.I.S.Y. <span>Front Desk™</span></div>
+  <div class="nav-links"><a href="#services">Services</a><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="#contact">Contact</a><a class="cta" href="#contact">Get started</a></div>
+</div></nav>
+<div class="wrap">
+  <a class="back" href="index.html" style="display:inline-block;margin-top:14px">← GPGV</a>
+
+  <header class="hero">
+    <div class="eyebrow"><span class="dot"></span>24/7 AI Receptionist</div>
+    <h1>Never miss <em>another lead</em>.</h1>
+    <p class="sub">D.R.A.I.S.Y. answers every call and text on your business number — books appointments, captures leads, and pings you the moment a hot one comes in. Cheaper than a VA, faster than voicemail, never sleeps.</p>
+    <div class="hero-cta"><a class="btn1" href="#contact">Book a 15-min demo →</a><a class="btn2" href="#how">See how it works</a></div>
+    <div class="stats">
+      <div class="stat"><div class="n">15s</div><div class="l">Avg response</div></div>
+      <div class="stat"><div class="n">24/7</div><div class="l">Always on</div></div>
+      <div class="stat"><div class="n">48h</div><div class="l">To go live</div></div>
+      <div class="stat"><div class="n">$197</div><div class="l">Per month</div></div>
+    </div>
+  </header>
+
+  <section id="services">
+    <div class="sh"><div class="k">Capabilities</div><h2>Your whole front desk, automated</h2></div>
+    <div class="grid">
+      <div class="card"><div class="ic">💬</div><h3>AI SMS Receptionist</h3><p>Replies to every inbound text in seconds, in your brand voice, around the clock.</p></div>
+      <div class="card"><div class="ic">📅</div><h3>Appointment Booking</h3><p>Checks availability and books consultations, then confirms back to the caller.</p></div>
+      <div class="card"><div class="ic">🔥</div><h3>Smart Escalation</h3><p>Hands off to you the instant a caller is hot, urgent, or asks for a human.</p></div>
+      <div class="card"><div class="ic">📞</div><h3>Voice Handler</h3><p>Answers live calls with a natural voice, takes bookings, and routes when needed.</p></div>
+      <div class="card"><div class="ic">📊</div><h3>Owner Dashboard</h3><p>Watch every conversation, lead and booking — and take over with one tap.</p></div>
+      <div class="card"><div class="ic">⚙️</div><h3>Done-For-You Setup</h3><p>We install and tune everything on your number. Live within 48 hours.</p></div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="sh"><div class="k">Process</div><h2>Live in 48 hours</h2></div>
+    <div class="steps">
+      <div class="step"><div class="num">01</div><h3>Intake</h3><p>Tell us your hours, services, FAQs, and where to send alerts.</p></div>
+      <div class="step"><div class="num">02</div><h3>Provision</h3><p>We install D.R.A.I.S.Y. on your number and load your business profile.</p></div>
+      <div class="step"><div class="num">03</div><h3>Test</h3><p>We run her through real scenarios so she's flawless before go-live.</p></div>
+      <div class="step"><div class="num">04</div><h3>Go live</h3><p>She starts answering, booking, and texting you leads — 24/7.</p></div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="sh"><div class="k">Pricing</div><h2>One saved deal pays for the year</h2></div>
+    <div class="pricing">
+      <div class="plan feat"><div class="pn">Front Desk Standard</div><div class="price">$197<small>/mo</small></div><div class="setup">+ $497 one-time setup · 14-day free trial</div>
+        <ul><li>AI SMS + voice receptionist</li><li>Appointment booking</li><li>Instant lead alerts</li><li>Owner console + live inbox</li><li>CRM & conversation logs</li></ul>
+        <a class="btn1" href="#contact" style="display:block">Start free trial →</a></div>
+      <div class="plan"><div class="pn">Enterprise</div><div class="price">Custom</div><div class="setup">Multi-location, white-label, CRM sync</div>
+        <ul><li>Everything in Standard</li><li>Multiple numbers & locations</li><li>White-label branding</li><li>Custom integrations</li><li>Priority support</li></ul>
+        <a class="btn2" href="#contact" style="display:block">Talk to us →</a></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="sh"><div class="k">Get started</div><h2>Book your free demo</h2></div>
+    <form id="contactForm" onsubmit="return submitContact(event)">
+      <div class="row"><div class="fg"><label>Your name</label><input name="name" required></div><div class="fg"><label>Business name</label><input name="business"></div></div>
+      <div class="row"><div class="fg"><label>Email</label><input type="email" name="email" required></div><div class="fg"><label>Phone</label><input name="phone"></div></div>
+      <div class="fg"><label>Industry</label><select name="industry"><option>Real estate</option><option>Salon / spa</option><option>Clinic / dental</option><option>Trades / home services</option><option>Fitness</option><option>Hospitality</option><option>Other</option></select></div>
+      <div class="fg"><label>Anything else?</label><textarea name="notes" rows="3" placeholder="Tell us about your front-desk pain…"></textarea></div>
+      <button class="fsub" type="submit" id="csub">Send — get my demo →</button>
+      <p id="cmsg" style="text-align:center;margin-top:14px;color:var(--green);display:none"></p>
+    </form>
+  </section>
+  <footer>D.R.A.I.S.Y. · A GPGV PROPERTY · 2701935 ALBERTA INC.</footer>
+</div>
+<script>
+var CONTACT_ENDPOINT="https://n8n-production-c95fe.up.railway.app/webhook/contact";
+async function submitContact(e){
+  e.preventDefault();
+  var f=e.target, btn=document.getElementById('csub'), msg=document.getElementById('cmsg');
+  var data={}; new FormData(f).forEach(function(v,k){data[k]=v;});
+  btn.disabled=true; btn.textContent='Sending…';
+  try{ await fetch(CONTACT_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}); }catch(err){}
+  f.reset(); btn.style.display='none';
+  msg.style.display='block'; msg.textContent="Got it — we'll reach out within 24 hours. Or call/text us now to see it live.";
+  return false;
+}
+</script>
+<script src="gpgv-edit.js"></script>
+</body></html>
