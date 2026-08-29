@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Gallery — GPGV</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,400&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet"/>
+<style>
+  :root{--bg:#0b0b0e;--panel:#141319;--ink:#f1eff4;--dim:#9a96a6;--accent:#9b8cff;--line:#26242e}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter Tight',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1140px;margin:0 auto;padding:24px}
+  .top{display:flex;justify-content:space-between;align-items:center}
+  .back{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);text-decoration:none;letter-spacing:.12em}
+  .admin-btn{font-family:'JetBrains Mono',monospace;font-size:11px;background:none;border:1px solid var(--line);color:var(--dim);padding:7px 12px;border-radius:6px;cursor:pointer}
+  header{text-align:center;padding:46px 0 26px}
+  .kick{font-family:'JetBrains Mono',monospace;letter-spacing:.35em;font-size:11px;color:var(--accent);text-transform:uppercase}
+  h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2.6rem,7vw,4.8rem);margin:12px 0;line-height:1}
+  .lead{color:var(--dim);max-width:520px;margin:0 auto;font-size:17px}
+  .tabs{display:flex;gap:6px;justify-content:center;margin:28px 0;border:1px solid var(--line);border-radius:30px;padding:4px;width:fit-content;margin-left:auto;margin-right:auto}
+  .tabs button{font-family:'JetBrains Mono',monospace;font-size:12px;background:none;border:none;color:var(--dim);padding:9px 18px;border-radius:30px;cursor:pointer;letter-spacing:.08em}
+  .tabs button.on{background:var(--accent);color:#0b0b0e}
+  .view{display:none}.view.on{display:block}
+  /* gallery */
+  .masonry{columns:3 280px;column-gap:16px}
+  .art{break-inside:avoid;margin-bottom:16px;border-radius:12px;overflow:hidden;border:1px solid var(--line);position:relative;cursor:pointer}
+  .art img{width:100%;display:block}
+  .art .ph{aspect-ratio:3/4;background:linear-gradient(135deg,#2a2740,#16151b);display:flex;align-items:center;justify-content:center;font-size:40px;color:#4a4760}
+  .art .cap{padding:12px;font-size:14px}.art .cap b{display:block}.art .cap span{color:var(--dim);font-size:12px}
+  .art .edit{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);border:none;color:#fff;border-radius:6px;padding:4px 8px;cursor:pointer;font-size:11px;display:none}
+  body.admin .art .edit{display:block}
+  /* listening */
+  .player{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px;max-width:640px;margin:0 auto}
+  .now{display:flex;gap:16px;align-items:center;margin-bottom:16px}
+  .cover{width:84px;height:84px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#ff5ca8);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:34px}
+  .now b{font-family:'Fraunces',serif;font-size:1.3rem;display:block}.now span{color:var(--dim);font-size:13px}
+  audio,video{width:100%;border-radius:10px;margin-top:6px}
+  video{margin-top:14px;background:#000}
+  .playlist{margin-top:18px;border-top:1px solid var(--line)}
+  .track{display:flex;justify-content:space-between;align-items:center;padding:12px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+  .track:hover{color:var(--accent)}.track.playing{color:var(--accent)}
+  .track .t b{display:block}.track .t span{color:var(--dim);font-size:12px}
+  .track .dur{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--dim)}
+  .empty{text-align:center;color:var(--dim);padding:50px;border:1px dashed var(--line);border-radius:14px}
+  .scrim{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+  .scrim.on{display:flex}
+  .modal{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;max-width:420px;width:100%;max-height:90vh;overflow:auto}
+  .modal h2{font-family:'Fraunces',serif;margin-bottom:8px}
+  label{display:block;font-size:12px;color:var(--dim);margin:12px 0 5px;text-transform:uppercase}
+  input{width:100%;padding:11px;background:var(--bg);border:1px solid var(--line);border-radius:8px;color:var(--ink);font-family:inherit;font-size:14px}
+  .rowb{display:flex;gap:10px;margin-top:18px}.rowb button{flex:1;padding:12px;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:12px}
+  .save{background:var(--accent);color:#0b0b0e}.cancel{background:var(--line);color:var(--ink)}.del{background:#3a1620;color:#ff8aa8}
+  footer{text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--dim);padding:40px 0}
+  @media(max-width:700px){.masonry{columns:2 160px}}
+</style>
+</head>
+<body><div class="wrap">
+  <div class="top"><a class="back" href="index.html">← GPGV</a><button class="admin-btn" onclick="toggleAdmin()">◆ Admin</button></div>
+  <header>
+    <div class="kick">Art Gallery · Listening Room</div>
+    <h1>The Gallery</h1>
+    <p class="lead">A space for the eyes and the ears. Browse the work, then press play.</p>
+  </header>
+  <div class="tabs"><button class="on" onclick="tab('art',this)">◳ Gallery</button><button onclick="tab('listen',this)">♪ Listening</button></div>
+
+  <div class="view on" id="view-art">
+    <div style="text-align:center;margin-bottom:16px"><button class="admin-btn" style="display:none" id="addArt" onclick="openArt()">+ Add artwork</button></div>
+    <div class="masonry" id="artGrid"></div>
+  </div>
+
+  <div class="view" id="view-listen">
+    <div class="player">
+      <div class="now"><div class="cover" id="nowCover">♪</div><div><b id="nowTitle">Select a track</b><span id="nowArtist">— press play below</span></div></div>
+      <audio id="audio" controls></audio>
+      <video id="video" controls style="display:none"></video>
+      <div id="embed" style="display:none;margin-top:12px;border-radius:10px;overflow:hidden"></div>
+      <div style="text-align:center;margin:14px 0"><button class="admin-btn" style="display:none" id="addTrack" onclick="openTrack()">+ Add track / video</button></div>
+      <div class="playlist" id="playlist"></div>
+    </div>
+  </div>
+  <footer>THE GALLERY · A GPGV ART & SOUND SPACE</footer>
+</div>
+
+<div class="scrim" id="artScrim"><div class="modal"><h2 id="artMTitle">Add Artwork</h2>
+  <label>Image</label><input type="file" id="a-file" accept="image/*" onchange="aImg(this)"/>
+  <input type="text" id="a-url" placeholder="…or image URL" oninput="aData=this.value" style="margin-top:8px"/>
+  <label>Title</label><input id="a-title"/><label>Medium / year</label><input id="a-meta"/>
+  <div class="rowb"><button class="save" onclick="saveArt()">Save</button><button class="del" id="aDel" onclick="delArt()" style="display:none">Delete</button><button class="cancel" onclick="document.getElementById('artScrim').classList.remove('on')">Cancel</button></div>
+</div></div>
+
+<div class="scrim" id="trackScrim"><div class="modal"><h2 id="trMTitle">Add Track / Video</h2>
+  <label>Audio or Video file</label><input type="file" id="t-file" accept="audio/*,video/*" onchange="tFile(this)"/>
+  <input type="url" id="t-url" placeholder="…or paste a SoundCloud / Mixcloud / YouTube / Spotify / .mp3 link" oninput="tData=this.value" style="margin-top:8px"/>
+  <p style="font-size:11px;color:var(--dim);margin-top:6px">Tip: for full DJ mixes, paste a SoundCloud/Mixcloud/YouTube link — it embeds and plays here. File uploads work best for short clips.</p>
+  <label>Title</label><input id="t-title"/><label>Artist</label><input id="t-artist"/>
+  <div class="rowb"><button class="save" onclick="saveTrack()">Save</button><button class="del" id="tDel" onclick="delTrack()" style="display:none">Delete</button><button class="cancel" onclick="document.getElementById('trackScrim').classList.remove('on')">Cancel</button></div>
+</div></div>
+
+<script>
+var AK='gpgv_art',TK='gpgv_tracks',PW='Dreplay2$$$',aEdit=null,tEdit=null,aData='',tData='',tIsVideo=false;
+var KV="https://n8n-production-c95fe.up.railway.app/webhook";
+function L(k){try{return JSON.parse(localStorage.getItem(k))||[]}catch(e){return[]}}
+function S(k,v){localStorage.setItem(k,JSON.stringify(v))}
+/* live backend: load published gallery for ALL visitors, publish on save */
+async function loadGallery(){
+  try{var r=await fetch(KV+'/kv?k=gallery',{cache:'no-store'});if(r.ok){var d=await r.json();if(d&&(d.art||d.tracks)){S(AK,d.art||[]);S(TK,d.tracks||[]);}}}catch(e){}
+  renderArt();renderTracks();
+}
+async function publish(){
+  try{var b=new URLSearchParams();b.set('key',PW);b.set('name','gallery');b.set('payload',JSON.stringify({art:L(AK),tracks:L(TK)}));
+    await fetch(KV+'/kv-save',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:b.toString()});}catch(e){}
+}
+/* turn a SoundCloud/Mixcloud/YouTube/Spotify link into an embedded player */
+function embedFor(url){
+  if(!url)return null;var u=String(url).trim();
+  var yt=u.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
+  if(yt)return{src:'https://www.youtube.com/embed/'+yt[1]+'?autoplay=1',h:340};
+  if(/soundcloud\.com/.test(u))return{src:'https://w.soundcloud.com/player/?url='+encodeURIComponent(u)+'&color=%239b8cff&auto_play=true&show_user=true',h:166};
+  if(/mixcloud\.com/.test(u)){var p=u.split('mixcloud.com')[1]||'';return{src:'https://www.mixcloud.com/widget/iframe/?feed='+encodeURIComponent(p)+'&hide_cover=1&autoplay=1',h:120};}
+  var sp=u.match(/open\.spotify\.com\/(track|album|playlist|episode|show)\/([\w]+)/);
+  if(sp)return{src:'https://open.spotify.com/embed/'+sp[1]+'/'+sp[2]+'?autoplay=1',h:(sp[1]==='track'?152:352)};
+  return null;
+}
+function esc(s){return String(s||'').replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]))}
+function tab(v,b){document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+  document.getElementById('view-art').classList.toggle('on',v==='art');document.getElementById('view-listen').classList.toggle('on',v==='listen');}
+function toggleAdmin(){if(document.body.classList.contains('admin')){document.body.classList.remove('admin');document.getElementById('addArt').style.display='none';document.getElementById('addTrack').style.display='none';renderArt();return}
+  var p=prompt('Admin password:');if(p===PW){document.body.classList.add('admin');document.getElementById('addArt').style.display='inline-block';document.getElementById('addTrack').style.display='inline-block';renderArt();}else if(p!==null)alert('Nope.');}
+/* gallery */
+function renderArt(){var items=L(AK),g=document.getElementById('artGrid');
+  if(!items.length){g.innerHTML='<div class="empty" style="columns:auto">No artwork yet. Use ◆ Admin to add pieces.</div>';return}
+  g.innerHTML=items.map(a=>'<div class="art"><button class="edit" onclick="openArt(\''+a.id+'\')">edit</button>'+
+    (a.img?'<img src="'+esc(a.img)+'"/>':'<div class="ph">🖼️</div>')+
+    '<div class="cap"><b>'+esc(a.title)+'</b><span>'+esc(a.meta)+'</span></div></div>').join('');}
+function openArt(id){aEdit=id&&typeof id==='string'?id:null;aData='';
+  var a=aEdit?L(AK).find(x=>x.id===aEdit):null;
+  document.getElementById('artMTitle').textContent=a?'Edit Artwork':'Add Artwork';
+  document.getElementById('aDel').style.display=a?'block':'none';
+  document.getElementById('a-title').value=a?a.title:'';document.getElementById('a-meta').value=a?a.meta:'';
+  document.getElementById('a-url').value=(a&&a.img&&a.img.indexOf('data:')!==0)?a.img:'';if(a)aData=a.img||'';
+  document.getElementById('artScrim').classList.add('on');}
+function aImg(i){var f=i.files[0];if(!f)return;var r=new FileReader();r.onload=e=>aData=e.target.result;r.readAsDataURL(f);}
+function saveArt(){var items=L(AK);var o={id:aEdit||('a'+Date.now()),title:document.getElementById('a-title').value.trim()||'Untitled',meta:document.getElementById('a-meta').value.trim(),img:aData};
+  if(aEdit){items[items.findIndex(x=>x.id===aEdit)]=o}else items.unshift(o);S(AK,items);document.getElementById('artScrim').classList.remove('on');renderArt();publish();}
+function delArt(){if(aEdit&&confirm('Delete?')){S(AK,L(AK).filter(x=>x.id!==aEdit));document.getElementById('artScrim').classList.remove('on');renderArt();publish();}}
+/* listening */
+function renderTracks(){var items=L(TK),pl=document.getElementById('playlist');
+  if(!items.length){pl.innerHTML='<div class="empty">No tracks yet. Use ◆ Admin to add music or video.</div>';return}
+  pl.innerHTML=items.map((t,i)=>'<div class="track" id="tr'+i+'" onclick="play('+i+')"><div class="t"><b>'+esc(t.title)+'</b><span>'+esc(t.artist)+'</span></div>'+
+    '<span class="dur">'+(t.video?'▶ video':'♪')+(document.body.classList.contains('admin')?' · <a onclick="event.stopPropagation();openTrack(\''+t.id+'\')" style="cursor:pointer">edit</a>':'')+'</span></div>').join('');}
+function play(i){var t=L(TK)[i];if(!t)return;document.querySelectorAll('.track').forEach(x=>x.classList.remove('playing'));var el=document.getElementById('tr'+i);if(el)el.classList.add('playing');
+  document.getElementById('nowTitle').textContent=t.title;document.getElementById('nowArtist').textContent=t.artist||'';
+  var a=document.getElementById('audio'),v=document.getElementById('video'),e=document.getElementById('embed');
+  var em=embedFor(t.src);
+  if(em){e.innerHTML='<iframe width="100%" height="'+em.h+'" frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen src="'+esc(em.src)+'"></iframe>';e.style.display='block';a.style.display='none';v.style.display='none';a.pause();v.pause();return;}
+  e.style.display='none';e.innerHTML='';
+  if(t.video){v.src=t.src;v.style.display='block';a.style.display='none';a.pause();v.play();}
+  else{a.src=t.src;a.style.display='block';v.style.display='none';v.pause();a.play();}}
+function openTrack(id){tEdit=id&&typeof id==='string'?id:null;tData='';tIsVideo=false;
+  var t=tEdit?L(TK).find(x=>x.id===tEdit):null;
+  document.getElementById('trMTitle').textContent=t?'Edit Track':'Add Track / Video';
+  document.getElementById('tDel').style.display=t?'block':'none';
+  document.getElementById('t-title').value=t?t.title:'';document.getElementById('t-artist').value=t?t.artist:'';
+  document.getElementById('t-url').value=(t&&t.src&&t.src.indexOf('data:')!==0)?t.src:'';if(t){tData=t.src;tIsVideo=t.video}
+  document.getElementById('trackScrim').classList.add('on');}
+function tFile(i){var f=i.files[0];if(!f)return;tIsVideo=f.type.indexOf('video')===0;var r=new FileReader();r.onload=e=>tData=e.target.result;r.readAsDataURL(f);}
+function saveTrack(){var items=L(TK);var url=document.getElementById('t-url').value.trim();if(url){tData=url;tIsVideo=/\.(mp4|webm|mov)/i.test(url)}
+  var o={id:tEdit||('t'+Date.now()),title:document.getElementById('t-title').value.trim()||'Untitled',artist:document.getElementById('t-artist').value.trim(),src:tData,video:tIsVideo};
+  if(!o.src){alert('Add a file or URL.');return}
+  if(tEdit){items[items.findIndex(x=>x.id===tEdit)]=o}else items.push(o);S(TK,items);document.getElementById('trackScrim').classList.remove('on');renderTracks();publish();}
+function delTrack(){if(tEdit&&confirm('Delete?')){S(TK,L(TK).filter(x=>x.id!==tEdit));document.getElementById('trackScrim').classList.remove('on');renderTracks();publish();}}
+loadGallery();
+</script>
+<script src="gpgv-edit.js"></script>
+</body></html>

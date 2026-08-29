@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nameology — What Your Name Means | GPGV</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Fraunces:ital,wght@1,500&family=JetBrains+Mono&family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root{--bg:#0a0714;--card:#16122a;--card2:#1d1838;--ink:#f0ecff;--dim:#a99fd0;--faint:#6b6394;--p1:#9b7bff;--p2:#19d3ff;--gold:#ffce5c;--line:#2a2350}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter Tight',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh}
+  body::before{content:'';position:fixed;inset:0;background:radial-gradient(900px 600px at 15% -5%,rgba(155,123,255,.16),transparent 60%),radial-gradient(800px 600px at 90% 10%,rgba(25,211,255,.12),transparent 55%),radial-gradient(700px 500px at 60% 110%,rgba(255,206,92,.08),transparent 60%);pointer-events:none;z-index:0}
+  .stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;background-image:radial-gradient(1px 1px at 20% 30%,#fff,transparent),radial-gradient(1px 1px at 70% 60%,#fff,transparent),radial-gradient(1px 1px at 40% 80%,#cbbfff,transparent),radial-gradient(1px 1px at 85% 25%,#fff,transparent),radial-gradient(1px 1px at 55% 15%,#9fe,transparent);background-size:300px 300px}
+  .wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:24px}
+  .back{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--faint);text-decoration:none;letter-spacing:.12em}
+  header{text-align:center;padding:48px 0 14px}
+  .kick{font-family:'JetBrains Mono',monospace;letter-spacing:.34em;font-size:11px;color:var(--p2);text-transform:uppercase}
+  h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.6rem,8vw,4.6rem);line-height:1;margin:12px 0;background:linear-gradient(100deg,var(--p1),var(--p2),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{color:var(--dim);font-size:17px;max-width:460px;margin:0 auto}
+  .inbox{display:flex;gap:10px;max-width:460px;margin:26px auto 0}
+  .inbox input{flex:1;padding:15px 18px;background:var(--card);border:1px solid var(--line);border-radius:12px;color:var(--ink);font-size:17px;font-family:inherit}
+  .inbox input:focus{outline:none;border-color:var(--p1);box-shadow:0 0 0 3px rgba(155,123,255,.15)}
+  .inbox button{background:linear-gradient(100deg,var(--p1),var(--p2));color:#0a0714;border:none;border-radius:12px;padding:0 22px;font-weight:700;font-size:15px;cursor:pointer;font-family:'Space Grotesk',sans-serif}
+  .hint{text-align:center;color:var(--faint);font-size:12px;margin-top:10px}
+  #out{margin:36px 0;display:none}
+  #out.show{display:block;animation:rise .5s ease both}
+  @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  .namecard{text-align:center;background:linear-gradient(165deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:20px;padding:34px 24px;margin-bottom:18px;box-shadow:0 30px 60px -30px #000}
+  .namecard .nm{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(2.4rem,9vw,4rem);line-height:1;background:linear-gradient(100deg,var(--gold),var(--p1));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .namecard .org{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--p2);margin-top:12px}
+  .namecard .mean{font-size:19px;color:var(--ink);margin-top:14px;line-height:1.5;font-weight:300}
+  .namecard .mean b{font-weight:600;color:var(--gold)}
+  .nums{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+  .num{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 12px;text-align:center}
+  .num .big{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:40px;line-height:1;background:linear-gradient(120deg,var(--p1),var(--p2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .num .lbl{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:7px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:16px}
+  .panel h3{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .panel p{color:var(--dim);font-size:14.5px;line-height:1.65}
+  .panel p b{color:var(--ink)}
+  .letters{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .lt{flex:1 1 120px;border:1px solid var(--line);border-radius:10px;padding:11px;background:rgba(255,255,255,.02)}
+  .lt .c{font-family:'Fraunces',serif;font-style:italic;font-size:20px;color:var(--gold)}
+  .lt .w{font-weight:600;font-size:13px;margin:2px 0}.lt .d{color:var(--dim);font-size:12px;line-height:1.4}
+  .traits{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .chip{font-family:'JetBrains Mono',monospace;font-size:11px;border:1px solid var(--line);border-radius:20px;padding:6px 12px;color:var(--p2)}
+  .share{display:flex;gap:10px;justify-content:center;margin-top:8px}
+  .share button{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;background:rgba(255,255,255,.04);color:var(--dim);border:1px solid var(--line);border-radius:9px;padding:11px 16px;cursor:pointer}
+  .share button:hover{color:var(--ink);border-color:var(--p1)}
+  footer{text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--faint);padding:36px 0}
+</style>
+</head>
+<body><div class="stars"></div><div class="wrap">
+  <a class="back" href="apps.html">← GPGV Apps</a>
+  <header>
+    <div class="kick">GPGV · Nameology</div>
+    <h1>What's in a name?</h1>
+    <p class="lead">Type any name and unlock its meaning, origin, hidden numerology, and the story each letter tells.</p>
+    <div class="inbox">
+      <input id="nameIn" placeholder="Enter a name…" autocomplete="off" onkeydown="if(event.key==='Enter')reveal()"/>
+      <button onclick="reveal()">Reveal ✨</button>
+    </div>
+    <p class="hint">Try your name, your crush's, your kid's, your business…</p>
+  </header>
+  <div id="out"></div>
+  <footer>NAMEOLOGY · A GPGV / DREJAVU APP</footer>
+</div>
+<script>
+/* ---------- name meaning dictionary ---------- */
+var NAMES={
+  andre:["French/Greek","manly, brave, a warrior"],andrew:["Greek","strong and manly"],
+  sam:["Hebrew","told by God; God has heard"],samuel:["Hebrew","God has heard"],
+  morgan:["Welsh","sea-born, bright sea-dweller"],jordan:["Hebrew","to flow down, descend"],
+  sarah:["Hebrew","princess, noblewoman"],emma:["Germanic","whole, universal"],
+  olivia:["Latin","olive tree — peace"],liam:["Irish","strong-willed protector"],
+  noah:["Hebrew","rest, comfort, peace"],ava:["Latin","life, birdlike, living one"],
+  sophia:["Greek","wisdom"],james:["Hebrew","supplanter, one who follows"],
+  mia:["Italian/Scandinavian","mine; beloved"],lucas:["Latin","bringer of light"],
+  isabella:["Hebrew/Italian","devoted to God"],ethan:["Hebrew","strong, firm, enduring"],
+  charlotte:["French","free, strong, feminine"],benjamin:["Hebrew","son of the right hand"],
+  amelia:["Germanic","industrious, striving"],henry:["Germanic","ruler of the home"],
+  grace:["Latin","goodness, divine favor"],leo:["Latin","lion — bold and brave"],
+  chloe:["Greek","blooming, green shoot"],max:["Latin","the greatest"],
+  maya:["Sanskrit/Greek","illusion; mother; dream"],alex:["Greek","defender of the people"],
+  alexander:["Greek","defender of mankind"],ruby:["Latin","red gemstone, passion"],
+  daniel:["Hebrew","God is my judge"],hannah:["Hebrew","grace, favor"],
+  jack:["English","God is gracious"],lily:["English","purity, beauty, rebirth"],
+  oscar:["Irish/Norse","God's spear; deer-lover"],zoe:["Greek","life"],
+  david:["Hebrew","beloved"],aria:["Italian/Hebrew","air, melody; lioness"],
+  michael:["Hebrew","who is like God"],nina:["Spanish/Slavic","little girl; dreamer"],
+  gabriel:["Hebrew","God is my strength"],ivy:["English","faithfulness, eternity"],
+  felix:["Latin","lucky, fortunate, happy"],luna:["Latin","the moon"],
+  oliver:["Latin","olive tree, symbol of peace"],wesley:["English","western meadow"],
+  victor:["Latin","conqueror, champion"],rose:["Latin","the flower; love"],
+  adam:["Hebrew","earth, the first man"],eve:["Hebrew","life, living one"],
+  john:["Hebrew","God is gracious"],mary:["Hebrew","beloved; star of the sea"],
+  robert:["Germanic","bright fame"],bob:["Germanic","bright fame (short for Robert)"],
+  ross:["Scottish","headland, cape; upland"],kai:["Hawaiian/Welsh","the sea; keeper"],
+  nova:["Latin","new, a new star"],pearl:["Latin","precious gem of the sea"],
+  drejavu:["GPGV original","a remembered future — DREJAVU's signature"],gpgv:["GPGV","good people, good vibes"]
+};
+/* first-letter personality */
+var LETTER={A:["Ambition","A natural leader — bold, independent, always first to act."],
+B:["Sensitivity","Warm and home-loving, you feel deeply and protect what you love."],
+C:["Expression","Charismatic and creative, you light up any room you enter."],
+D:["Discipline","Grounded and reliable — you build things that last."],
+E:["Freedom","Bright, social, and restless for adventure and new ideas."],
+F:["Devotion","Loving and responsible, you carry others with grace."],
+G:["Insight","Thoughtful and intuitive — you see what others miss."],
+H:["Drive","Resourceful and determined, you turn vision into wealth."],
+I:["Compassion","Artistic and empathetic, you feel the world intensely."],
+J:["Justice","Honest and idealistic, you're driven by fairness."],
+K:["Vision","Intuitive and magnetic — a quiet powerhouse."],
+L:["Harmony","Charming and balanced, you bring people together."],
+M:["Strength","Hardworking and steady, you're the rock others lean on."],
+N:["Imagination","Original and witty, your mind never stops creating."],
+O:["Resolve","Disciplined and caring, you commit fully to your path."],
+P:["Wisdom","Analytical and perceptive — you study before you leap."],
+Q:["Mystery","Magnetic and unconventional, you march to your own beat."],
+R:["Compassion","Strong yet tender — a healer and a doer."],
+S:["Passion","Emotional and dynamic, you live life in vivid color."],
+T:["Faith","Sensitive and spiritual, you seek deeper meaning."],
+U:["Luck","Creative and lucky, opportunities seem to find you."],
+V:["Power","Visionary and intense — you build empires."],
+W:["Charm","Sociable and adventurous, you're a born storyteller."],
+X:["Magnetism","Sensual and rare, you leave a lasting impression."],
+Y:["Independence","Free-spirited and intuitive, you walk your own road."],
+Z:["Energy","Optimistic and electric — you spark change wherever you go."]};
+/* numerology meanings */
+var NUM={1:["The Leader","independent, pioneering, driven to be first."],2:["The Peacemaker","diplomatic, sensitive, a gifted partner and listener."],
+3:["The Creator","expressive, joyful, artistic and magnetic."],4:["The Builder","practical, loyal, the foundation everyone relies on."],
+5:["The Free Spirit","adventurous, curious, a lover of freedom and change."],6:["The Nurturer","caring, responsible, devoted to home and harmony."],
+7:["The Seeker","analytical, spiritual, a deep thinker and truth-hunter."],8:["The Powerhouse","ambitious, abundant, born for success and impact."],
+9:["The Humanitarian","compassionate, wise, here to lift the whole world."],11:["The Visionary","a master number — intuitive, inspired, here to illuminate."],
+22:["The Master Builder","a master number — turns the biggest dreams into reality."],33:["The Master Teacher","a master number — pure-hearted guidance and healing."]};
+var COLORS={1:"Red",2:"Orange",3:"Yellow",4:"Green",5:"Blue",6:"Indigo",7:"Violet",8:"Rose Gold",9:"White",11:"Silver",22:"Gold",33:"Aqua"};
+
+function val(c){c=c.toUpperCase();var i="ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(c);return i<0?0:(i%9)+1;}
+function reduce(n){while(n>9&&n!==11&&n!==22&&n!==33){n=String(n).split('').reduce(function(a,b){return a+ +b;},0);}return n;}
+function isVowel(c){return "AEIOU".indexOf(c.toUpperCase())>-1;}
+function calc(name){
+  var letters=name.replace(/[^a-z]/gi,'').split('');
+  var all=0,vow=0,con=0;
+  letters.forEach(function(c){var v=val(c);all+=v;if(isVowel(c))vow+=v;else con+=v;});
+  return {expression:reduce(all),soul:reduce(vow),personality:reduce(con)};
+}
+function esc(s){return String(s).replace(/[<>&]/g,function(c){return{'<':'&lt;','>':'&gt;','&':'&amp;'}[c];});}
+
+function reveal(){
+  var raw=document.getElementById('nameIn').value.trim();
+  if(!raw){return;}
+  var first=raw.split(/\s+/)[0];
+  var key=first.toLowerCase().replace(/[^a-z]/g,'');
+  var dict=NAMES[key];
+  var n=calc(raw);
+  var nm=NUM[n.expression], soul=NUM[n.soul], pers=NUM[n.personality];
+  var L=LETTER[first[0].toUpperCase()]||["Mystery","a one-of-a-kind energy all your own."];
+  var letterCards=first.toUpperCase().replace(/[^A-Z]/g,'').split('').map(function(c){
+    var t=LETTER[c]; if(!t)return''; return '<div class="lt"><div class="c">'+c+'</div><div class="w">'+t[0]+'</div><div class="d">'+t[1]+'</div></div>';
+  }).join('');
+  var origin = dict ? dict[0] : "Origin unwritten";
+  var meaning = dict ? ('means <b>'+dict[1]+'</b>') : ('carries the energy of <b>'+nm[1]+'</b>');
+  var html='';
+  html+='<div class="namecard"><div class="nm">'+esc(first)+'</div>'
+      +'<div class="org">'+esc(origin)+'</div>'
+      +'<div class="mean">'+esc(first)+' '+meaning+'</div>'
+      +'<div class="traits"><span class="chip">Number '+n.expression+'</span><span class="chip">Lucky color: '+COLORS[n.expression]+'</span><span class="chip">'+nm[0]+'</span></div></div>';
+  html+='<div class="nums">'
+      +'<div class="num"><div class="big">'+n.expression+'</div><div class="lbl">Name Number</div></div>'
+      +'<div class="num"><div class="big">'+n.soul+'</div><div class="lbl">Soul Urge</div></div>'
+      +'<div class="num"><div class="big">'+n.personality+'</div><div class="lbl">Personality</div></div></div>';
+  html+='<div class="panel"><h3>🔢 Your Name Number — '+n.expression+', '+nm[0]+'</h3><p>The vibration of your whole name says you are '+nm[1]+'</p></div>';
+  html+='<div class="panel"><h3>💗 Soul Urge — '+n.soul+'</h3><p>What your heart secretly craves: the energy of <b>'+soul[0]+'</b> — '+soul[1]+'</p></div>';
+  html+='<div class="panel"><h3>🎭 Personality — '+n.personality+'</h3><p>How the world first reads you: <b>'+pers[0]+'</b> — '+pers[1]+'</p></div>';
+  html+='<div class="panel"><h3>✴️ First letter: '+first[0].toUpperCase()+' — '+L[0]+'</h3><p>'+L[1]+'</p></div>';
+  if(letterCards) html+='<div class="panel"><h3>🔠 Letter by letter</h3><div class="letters">'+letterCards+'</div></div>';
+  html+='<div class="share"><button onclick="copyResult(\''+esc(first)+'\','+n.expression+')">⧉ Copy my reading</button><button onclick="document.getElementById(\'nameIn\').value=\'\';document.getElementById(\'nameIn\').focus();document.getElementById(\'out\').classList.remove(\'show\')">Try another →</button></div>';
+  var out=document.getElementById('out'); out.innerHTML=html; out.classList.add('show');
+  out.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function copyResult(name,num){
+  var dict=NAMES[name.toLowerCase().replace(/[^a-z]/g,'')];
+  var t=name+' — '+(dict?('"'+dict[1]+'" ('+dict[0]+')'):'a name with its own energy')+'. Name Number '+num+': '+NUM[num][0]+'. Discover yours at gpgv.ca';
+  if(navigator.clipboard) navigator.clipboard.writeText(t);
+}
+</script>
+<script src="gpgv-edit.js"></script>
+</body></html>

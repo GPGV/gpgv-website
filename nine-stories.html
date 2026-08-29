@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>9 Stories Publishing</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono&family=Inter+Tight:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{--paper:#f4f1ea;--ink:#1c1a17;--dim:#6b6459;--accent:#7a2e2e;--gold:#b08d2a;--line:#d8d2c4}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Libre Baskerville',serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.6}
+  .wrap{max-width:980px;margin:0 auto;padding:24px}
+  .back{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);text-decoration:none;letter-spacing:.12em}
+  .top{text-align:center;padding:56px 0 28px;border-bottom:3px double var(--ink)}
+  .mast{font-family:'JetBrains Mono',monospace;letter-spacing:.4em;font-size:11px;color:var(--accent);text-transform:uppercase}
+  h1{font-size:clamp(2.6rem,7vw,4.6rem);line-height:1;margin:14px 0 8px;letter-spacing:-.02em}
+  .tagline{font-style:italic;color:var(--dim);font-size:18px}
+  .sec-h{font-family:'JetBrains Mono',monospace;letter-spacing:.2em;font-size:12px;color:var(--accent);text-transform:uppercase;margin:46px 0 6px;text-align:center}
+  .sec-rule{width:60px;height:1px;background:var(--accent);margin:0 auto 26px}
+  /* featured */
+  .feature{display:flex;gap:30px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:26px;box-shadow:0 12px 30px -16px rgba(0,0,0,.3)}
+  .feature .cover{width:180px;flex-shrink:0;height:250px;border-radius:3px 8px 8px 3px;box-shadow:6px 8px 22px -8px rgba(0,0,0,.5);display:flex;flex-direction:column;justify-content:center;padding:20px;color:#f4f1ea;background:linear-gradient(160deg,#e0a000,#7a2e2e)}
+  .feature .cover .t{font-size:1.4rem;font-weight:700;line-height:1.1}
+  .feature .cover .a{font-size:.8rem;font-style:italic;margin-top:12px;opacity:.9;font-family:'Inter Tight',sans-serif}
+  .feature .info h2{font-size:1.9rem;margin-bottom:6px}
+  .feature .info .by{font-style:italic;color:var(--dim);margin-bottom:12px}
+  .feature .info p{font-size:16px;color:#3a342c;margin-bottom:18px}
+  .badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;background:#eadfae;color:#6b5a16;padding:4px 10px;border-radius:20px;margin-bottom:12px}
+  .btn{display:inline-block;background:#e0640a;color:#fff;text-decoration:none;padding:13px 26px;border-radius:6px;font-family:'Inter Tight',sans-serif;font-weight:700;font-size:15px}
+  .btn:hover{background:#c9560a}
+  /* coming soon shelf */
+  .shelf{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:26px;margin:10px 0 20px}
+  .book{text-align:center}
+  .book .cover{aspect-ratio:2/3;border-radius:3px 8px 8px 3px;box-shadow:6px 8px 22px -8px rgba(0,0,0,.5);display:flex;flex-direction:column;justify-content:center;padding:20px;color:#f4f1ea;position:relative}
+  .book .cover .num{position:absolute;top:12px;left:12px;font-family:'JetBrains Mono',monospace;font-size:10px;opacity:.8}
+  .book .cover .t{font-size:1.4rem;font-weight:700;line-height:1.15}
+  .book .cover .soon{position:absolute;bottom:14px;left:0;right:0;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;opacity:.85}
+  .book .meta{margin-top:12px;font-family:'Inter Tight',sans-serif}
+  .book .meta b{display:block;font-size:15px}.book .meta span{font-size:12px;color:var(--dim)}
+  .sub{background:#fff;border:1px solid var(--line);border-radius:10px;padding:36px;margin:44px 0;text-align:center}
+  .sub h2{font-size:1.7rem;margin-bottom:8px}.sub p{color:var(--dim);margin-bottom:18px;font-family:'Inter Tight',sans-serif}
+  footer{text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--dim);padding:40px 0;border-top:3px double var(--ink)}
+</style>
+</head>
+<body><div class="wrap">
+  <a class="back" href="index.html">← GPGV</a>
+  <div class="top">
+    <div class="mast">An Independent Press</div>
+    <h1>9 Stories</h1>
+    <p class="tagline">Bold voices · strange tales · beautiful books.</p>
+  </div>
+
+  <div class="sec-h">Available Now</div><div class="sec-rule"></div>
+  <div class="feature">
+    <div class="cover" style="background:#0c1b22 url('assets/pineapple-complete-set.png') center/cover;height:285px;padding:0"></div>
+    <div class="info">
+      <span class="badge">DIGITAL · ON ETSY</span>
+      <h2>The Pineapple Manifesto</h2>
+      <div class="by">by Andre Bourque</div>
+      <p>The founding philosophy of GPGV — good people, good vibes, and the pineapple that started it all. A set of digital products available now on Etsy.</p>
+      <a class="btn" id="etsyBtn" href="https://www.etsy.com/ca/listing/4516753616/the-pineapple-manifesto-complete-set" target="_blank" rel="noopener">Buy on Etsy →</a>
+      <button onclick="gpgvShare({title:'The Pineapple Manifesto',text:'The Pineapple Manifesto — a sweet, spiky guide to ethical polyamory',url:'https://www.gpgv.ca/nine-stories.html'})" style="background:none;border:1px solid var(--line);color:var(--dim);border-radius:6px;padding:11px 18px;margin-left:8px;cursor:pointer;font-family:'Inter Tight',sans-serif;font-weight:600;font-size:14px">↗ Share</button>
+    </div>
+  </div>
+
+  <div class="sec-h">Inside the Complete Set · All Three Volumes</div><div class="sec-rule"></div>
+  <div class="shelf" style="margin-top:0">
+    <div class="book"><div class="cover" style="background:#0c1b22 url('assets/pm-vol1.png') center/cover;padding:0"></div><div class="meta"><b>Volume One</b><span>The Founding Edition</span></div></div>
+    <div class="book"><div class="cover" style="background:#0c1b22 url('assets/pm-vol2.png') center/cover;padding:0"></div><div class="meta"><b>Volume Two</b><span>The Companion Workbook</span></div></div>
+    <div class="book"><div class="cover" style="background:#0c1b22 url('assets/pm-vol3.png') center/cover;padding:0"></div><div class="meta"><b>Volume Three</b><span>Polycule Templates</span></div></div>
+  </div>
+
+  <div class="sec-h">Coming Soon — The Nine Stories Series</div><div class="sec-rule"></div>
+  <div class="shelf">
+    <div class="book"><div class="cover" style="background:linear-gradient(160deg,#2e7d5b,#123a28)"><div class="num">BOOK ONE</div><div class="t">Robb Bob Ross</div><div class="soon">COMING SOON</div></div><div class="meta"><b>Robb Bob Ross</b><span>Book One · The Nine Stories Series</span></div></div>
+    <div class="book"><div class="cover" style="background:#0a0d18 url('assets/last-sound.webp') center/cover;padding:0"></div><div class="meta"><b>The Last Sound</b><span>Book Two · The Nine Stories Series</span></div></div>
+    <div class="book"><div class="cover" style="background:linear-gradient(160deg,#5a5a5a,#222);opacity:.55"><div class="num">BOOK THREE</div><div class="t">?</div><div class="soon">TBA</div></div><div class="meta"><b>Untitled</b><span>Book Three · TBA</span></div></div>
+  </div>
+
+  <div class="sub">
+    <h2>Submit your manuscript</h2>
+    <p>We read everything. If it's bold, strange, or beautiful — we want it.</p>
+    <a class="btn" href="index.html">Pitch us through the GPGV desk →</a>
+  </div>
+  <footer>9 STORIES PUBLISHING · A GPGV PRESS</footer>
+</div><script src="gpgv-edit.js"></script>
+</body></html>

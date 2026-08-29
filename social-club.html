@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GPGV — Private Elite Social Club</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono&family=Inter+Tight:wght@300;500&display=swap" rel="stylesheet"/>
+<style>
+  :root{--bg:#08080a;--gold:#d4af37;--gold2:#f0d488;--ink:#ece7da;--dim:#9a927f;--line:rgba(212,175,55,.25)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter Tight',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  .deco{position:fixed;inset:0;pointer-events:none;background:
+    repeating-linear-gradient(90deg,transparent,transparent 38px,rgba(212,175,55,.04) 39px,transparent 40px),
+    radial-gradient(circle at 50% -10%,rgba(212,175,55,.12),transparent 55%);z-index:0}
+  .wrap{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:24px;text-align:center}
+  .back{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);text-decoration:none;letter-spacing:.12em;display:inline-block;text-align:left;width:100%}
+  .crest{font-size:40px;margin:60px 0 8px;color:var(--gold)}
+  .kick{font-family:'JetBrains Mono',monospace;letter-spacing:.5em;font-size:11px;color:var(--gold);text-transform:uppercase}
+  h1{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(2.8rem,8vw,5.4rem);line-height:1;margin:14px 0;color:var(--gold2)}
+  .rule{width:80px;height:1px;background:var(--gold);margin:18px auto}
+  .lead{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;color:#d8cfb8;max-width:600px;margin:0 auto;line-height:1.5}
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:54px 0}
+  .pillar{border:1px solid var(--line);border-radius:10px;padding:26px 16px}
+  .pillar .g{font-family:'Cormorant Garamond',serif;font-size:30px;color:var(--gold)}
+  .pillar h3{font-size:15px;letter-spacing:.04em;margin:8px 0 6px}
+  .pillar p{color:var(--dim);font-size:13px;line-height:1.5}
+  .apply{border:1px solid var(--gold);border-radius:14px;padding:40px 28px;margin:40px auto;max-width:480px;background:rgba(212,175,55,.04)}
+  .apply h2{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--gold2);margin-bottom:8px}
+  .apply p{color:var(--dim);margin-bottom:20px;font-size:15px}
+  input{width:100%;padding:12px 14px;margin-bottom:12px;background:#101012;border:1px solid var(--line);border-radius:6px;color:var(--ink);font-family:inherit;font-size:15px}
+  input:focus{outline:none;border-color:var(--gold)}
+  button{width:100%;padding:14px;background:linear-gradient(135deg,#9c7a1e,var(--gold));border:none;border-radius:6px;color:#08080a;font-weight:700;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;cursor:pointer;font-size:13px}
+  .whisper{margin-top:18px;font-style:italic;font-family:'Cormorant Garamond',serif;color:var(--dim);font-size:16px}
+  .ok{display:none;color:var(--gold2);margin-top:12px;font-style:italic;font-family:'Cormorant Garamond',serif;font-size:18px}
+  .charter{border:1px solid var(--gold);border-radius:14px;padding:38px 28px;margin:40px auto;max-width:560px;background:rgba(212,175,55,.05);text-align:left}
+  .charter .kick{text-align:center;display:block}
+  .charter h2{font-family:'Cormorant Garamond',serif;color:var(--gold2);font-size:2.3rem;text-align:center;margin:10px 0}
+  .charter .lead{font-size:19px;margin:0 auto 8px}
+  .sent{text-align:center;color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;margin-bottom:14px}
+  .tenets{margin:22px 0}
+  .tenet{border-top:1px solid var(--line);padding:15px 2px}
+  .tenet b{display:block;font-family:'Cormorant Garamond',serif;color:var(--gold2);font-size:19px;margin-bottom:4px}
+  .tenet span{color:var(--dim);font-size:14px;line-height:1.55}
+  footer{color:#5a5446;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.25em;padding:50px 0}
+  @media(max-width:640px){.pillars{grid-template-columns:1fr}}
+</style>
+</head>
+<body><div class="deco"></div><div class="wrap">
+  <a class="back" href="index.html">← GPGV</a>
+  <div class="crest">❧</div>
+  <div class="kick">Members Only · By Invitation</div>
+  <h1>The GPGV Club</h1>
+  <div class="rule"></div>
+  <p class="lead">An elite social club for good people with good vibes. Private rooms, rare company, and evenings you won't read about anywhere.</p>
+  <div class="pillars">
+    <div class="pillar"><div class="g">I</div><h3>The Table</h3><p>Intimate dinners & tastings with members and invited guests.</p></div>
+    <div class="pillar"><div class="g">II</div><h3>The Room</h3><p>After-hours sessions, sound, and conversation that matters.</p></div>
+    <div class="pillar"><div class="g">III</div><h3>The Circle</h3><p>A trusted network — founders, artists, makers, and originals.</p></div>
+  </div>
+  <div class="apply" id="applyBox">
+    <h2>Request an Invitation</h2>
+    <p>Membership is reviewed personally. Tell us who you are — and we'll send our Sacred Space Charter straight to your inbox.</p>
+    <form id="clubForm">
+      <input name="name" placeholder="Full name" required/>
+      <input type="email" name="email" placeholder="Email" required/>
+      <input name="phone" placeholder="Phone (optional)"/>
+      <button type="submit" id="clubBtn">Submit for Review</button>
+    </form>
+    <p class="whisper">Those who know, know. 🍍</p>
+  </div>
+
+  <div class="charter" id="charter" style="display:none">
+    <span class="kick">The Sacred Space Charter</span>
+    <h2>Welcome inside.</h2>
+    <p class="lead">You've asked to step into the circle. Before the door opens, here is what we hold sacred.</p>
+    <p class="sent" id="sentNote">✓ A copy is on its way to your inbox.</p>
+    <div class="tenets" id="charterTenets"></div>
+    <p class="whisper">These are not rules so much as a way of being. Live them, and the door stays open.<br/>With warmth — GPGV · Those who know, know. 🍍</p>
+  </div>
+  <footer>THE GPGV CLUB · DISCRETION ALWAYS</footer>
+</div>
+<script>
+(function(){
+  var API='https://n8n-production-c95fe.up.railway.app';
+  var TENETS=[
+   ['I · Discretion is sacred.','What is shared here, stays here. No names, no photos, no stories carried out the door. Privacy is the price and the privilege of belonging.'],
+   ['II · Consent is the cornerstone.','Every connection, conversation, and closeness is freely chosen. “No” is a complete sentence, and is always honored. Yes means yes; anything less means no.'],
+   ['III · Presence over performance.','Leave the titles at the door. Here you are not your résumé — you are your real self. We meet eye to eye.'],
+   ['IV · Respect the circle.','Every member was chosen with care. Treat each person — and every invited guest — as you would a treasured friend.'],
+   ['V · Good vibes, always.','We protect the warmth of this place. Cruelty, coercion, and ego have no seat at our table.'],
+   ['VI · Belong, don’t possess.','The club is a garden, not a cage. Come freely, give generously, and hold nothing too tightly.']
+  ];
+  // render on-page tenets
+  document.getElementById('charterTenets').innerHTML=TENETS.map(function(t){
+    return '<div class="tenet"><b>'+t[0]+'</b><span>'+t[1]+'</span></div>';}).join('');
+  // build the email
+  function charterEmail(name){
+    var rows=TENETS.map(function(t){
+      return '<tr><td style="padding:13px 0;border-top:1px solid rgba(212,175,55,.22)">'+
+        '<div style="font-family:Georgia,serif;color:#f0d488;font-size:18px;margin-bottom:3px">'+t[0]+'</div>'+
+        '<div style="color:#b9b3a3;font-size:14px;line-height:1.55">'+t[1]+'</div></td></tr>';}).join('');
+    return '<div style="background:#08080a;padding:30px 12px;font-family:Georgia,serif">'+
+     '<div style="max-width:560px;margin:0 auto;background:#0e0e11;border:1px solid rgba(212,175,55,.35);border-radius:14px;padding:34px 30px;color:#ece7da">'+
+     '<div style="text-align:center;color:#d4af37;font-size:32px">❧</div>'+
+     '<div style="text-align:center;font-family:Courier,monospace;letter-spacing:4px;font-size:10px;color:#d4af37;text-transform:uppercase">Members Only · By Invitation</div>'+
+     '<div style="text-align:center;color:#f0d488;font-size:30px;margin:8px 0 2px">The GPGV Club</div>'+
+     '<div style="width:70px;height:1px;background:#d4af37;margin:14px auto"></div>'+
+     '<p style="text-align:center;font-style:italic;color:#d8cfb8;font-size:17px;line-height:1.55">'+(name?('Dear '+name+', '):'')+'thank you for asking to step inside. Before the door opens, here is what we hold sacred.</p>'+
+     '<div style="text-align:center;color:#f0d488;font-size:19px;margin:24px 0 4px">The Sacred Space Charter</div>'+
+     '<table style="width:100%;border-collapse:collapse">'+rows+'</table>'+
+     '<p style="text-align:center;font-style:italic;color:#9a927f;margin-top:22px">These are not rules so much as a way of being. Live them, and the door stays open. Your request is now with us — if it is a fit, you will hear from us, quietly.</p>'+
+     '<p style="text-align:center;color:#d4af37;font-style:italic;font-size:18px">Those who know, know. 🍍</p>'+
+     '<p style="text-align:center;font-family:Courier,monospace;font-size:9px;letter-spacing:2px;color:#5a5446;margin-top:16px">THE GPGV CLUB · DISCRETION ALWAYS</p>'+
+     '</div></div>';
+  }
+  function enc(o){return Object.keys(o).map(function(k){return encodeURIComponent(k)+'='+encodeURIComponent(o[k])}).join('&')}
+  var form=document.getElementById('clubForm');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var name=(form.name.value||'').trim(), email=(form.email.value||'').trim(), phone=(form.phone.value||'').trim();
+    if(!email)return;
+    document.getElementById('clubBtn').textContent='Sending…';
+    // 1) alert the owner + log the lead
+    fetch(API+'/webhook/contact',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:enc({name:name,email:email,phone:phone,business:'GPGV Social Club',industry:'invitation request',notes:'Requested an invitation to the GPGV Private Club — charter emailed.'})}).catch(function(){});
+    // 2) email the Sacred Space Charter to the applicant (server-side Resend template)
+    fetch(API+'/webhook/club-charter',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({to:email,name:name})}).catch(function(){});
+    // 3) reveal the charter on-screen
+    document.getElementById('applyBox').style.display='none';
+    var c=document.getElementById('charter'); c.style.display='block'; c.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+})();
+</script>
+<script src="gpgv-edit.js"></script>
+</body></html>

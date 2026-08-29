@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Open Hearts — Writers' Room</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,400&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet"/>
+<style>
+  :root{--bg:#1a0f16;--card:#241620;--ink:#f6ecf0;--dim:#c2a8b6;--rose:#e8728f;--plum:#b07cc9;--gold:#e3b341;--line:#3a2530}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter Tight',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 560px at 15% -5%,rgba(232,114,143,.14),transparent 60%),radial-gradient(800px 560px at 90% 10%,rgba(176,124,201,.14),transparent 55%);pointer-events:none;z-index:0}
+  .wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:24px}
+  .back{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);text-decoration:none;letter-spacing:.12em}
+  header{text-align:center;padding:48px 0 20px}
+  .kick{font-family:'JetBrains Mono',monospace;letter-spacing:.32em;font-size:11px;color:var(--rose);text-transform:uppercase}
+  h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2.2rem,6vw,3.6rem);margin:12px 0;line-height:1;background:linear-gradient(100deg,var(--rose),var(--plum));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{color:var(--dim);max-width:540px;margin:0 auto;font-size:16px;line-height:1.55}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;margin:18px 0}
+  label{display:block;font-size:12px;color:var(--dim);margin:10px 0 5px;text-transform:uppercase;letter-spacing:.08em}
+  input,textarea{width:100%;padding:12px 14px;background:#160d13;border:1px solid var(--line);border-radius:10px;color:var(--ink);font-family:inherit;font-size:15px}
+  textarea{min-height:200px;resize:vertical;line-height:1.6;font-size:16px}
+  .btn{background:linear-gradient(100deg,var(--rose),var(--plum));color:#1a0f16;border:none;border-radius:30px;padding:13px 26px;font-weight:700;cursor:pointer;font-size:15px}
+  .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--dim)}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .who{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+  .who b{font-family:'Fraunces',serif;font-size:1.2rem}
+  .msg{font-size:13px;margin-top:8px;min-height:18px}
+  .ok{color:#8fe0a8}.err{color:var(--rose)}
+  .sec-h{font-family:'JetBrains Mono',monospace;letter-spacing:.2em;font-size:12px;color:var(--rose);text-transform:uppercase;margin:36px 0 6px;text-align:center}
+  .sec-rule{width:54px;height:1px;background:var(--rose);margin:0 auto 22px}
+  .piece{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin:14px 0}
+  .piece h3{font-family:'Fraunces',serif;font-size:1.4rem;margin-bottom:4px}
+  .piece .by{font-size:12px;color:var(--dim);font-family:'JetBrains Mono',monospace;letter-spacing:.06em;margin-bottom:12px}
+  .piece .body{white-space:pre-wrap;line-height:1.7;color:#eaddE4;font-size:16px}
+  .piece .adm{margin-top:12px}
+  .tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;border:1px solid var(--line);color:var(--dim);margin-left:8px}
+  .del{background:#3a1620;color:#ff8aa8;border:none;border-radius:8px;padding:7px 13px;cursor:pointer;font-size:12px}
+  .pfoot{margin-top:14px;display:flex;gap:8px;align-items:center}
+  .sharebtn{background:transparent;border:1px solid var(--line);color:var(--dim);border-radius:8px;padding:7px 14px;cursor:pointer;font-size:12px}
+  .sharebtn:hover{border-color:var(--rose);color:var(--rose)}
+  .piece:target{outline:2px solid var(--rose);outline-offset:4px}
+  .empty{text-align:center;color:var(--dim);padding:36px;border:1px dashed var(--line);border-radius:14px}
+  footer{text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;color:#8a7280;padding:40px 0}
+</style>
+</head>
+<body><div class="wrap">
+  <a class="back" href="relationships.html">← Open Hearts</a>
+  <header>
+    <div class="kick">Open Hearts · Education</div>
+    <h1>The Writers' Room</h1>
+    <p class="lead">A private corner for our voices. Sign in to share your writing — essays, poems, reflections on love, consent, and connection.</p>
+  </header>
+
+  <!-- LOGIN -->
+  <div class="card" id="loginCard">
+    <div class="who"><b>Sign in</b></div>
+    <div class="row">
+      <div style="flex:1;min-width:160px"><label>Name</label><input id="u" placeholder="lilly or andre" autocomplete="username"/></div>
+      <div style="flex:1;min-width:160px"><label>Password</label><input id="p" type="password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+    </div>
+    <div class="row" style="margin-top:16px"><button class="btn" onclick="doLogin()">Sign in →</button></div>
+    <div class="msg" id="loginMsg"></div>
+  </div>
+
+  <!-- COMPOSER (logged in) -->
+  <div class="card" id="composer" style="display:none">
+    <div class="who"><b id="hello">Welcome</b><button class="btn ghost" onclick="logout()">Sign out</button></div>
+    <label>Title</label><input id="t-title" placeholder="Give it a name"/>
+    <label>Your writing</label><textarea id="t-body" placeholder="Write freely…"></textarea>
+    <div class="row" style="margin-top:14px"><button class="btn" onclick="submitWriting()">Publish to Open Hearts →</button></div>
+    <div class="msg" id="subMsg"></div>
+  </div>
+
+  <div class="sec-h">The Writings</div><div class="sec-rule"></div>
+  <div id="feed"><div class="empty">Loading…</div></div>
+
+  <footer>OPEN HEARTS · WRITERS' ROOM · A GPGV EDUCATION VENTURE</footer>
+</div>
+
+<script>
+var API="https://n8n-production-c95fe.up.railway.app/webhook";
+function esc(s){return String(s==null?'':s).replace(/[<>&]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c];});}
+function creds(){try{return JSON.parse(sessionStorage.getItem('oh_creds'))||null}catch(e){return null}}
+function setCreds(c){if(c)sessionStorage.setItem('oh_creds',JSON.stringify(c));else sessionStorage.removeItem('oh_creds');}
+function form(obj){var b=new URLSearchParams();Object.keys(obj).forEach(function(k){if(obj[k]!=null)b.set(k,obj[k])});return b.toString();}
+
+async function doLogin(){
+  var u=document.getElementById('u').value.trim().toLowerCase(),p=document.getElementById('p').value;
+  var m=document.getElementById('loginMsg'); m.textContent='Checking…'; m.className='msg';
+  try{
+    var r=await fetch(API+'/oh-login',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:form({u:u,p:p})});
+    var d=await r.json();
+    if(d.ok){ setCreds({u:d.user,p:p,role:d.role,name:d.name}); m.textContent=''; render(); }
+    else { m.textContent='That name and password didn’t match.'; m.className='msg err'; }
+  }catch(e){ m.textContent='Could not reach the server. Try again.'; m.className='msg err'; }
+}
+function logout(){ setCreds(null); document.getElementById('p').value=''; render(); }
+
+async function submitWriting(){
+  var c=creds(); if(!c)return;
+  var title=document.getElementById('t-title').value.trim(), body=document.getElementById('t-body').value.trim();
+  var m=document.getElementById('subMsg');
+  if(!body){ m.textContent='Write something first.'; m.className='msg err'; return; }
+  m.textContent='Publishing…'; m.className='msg';
+  try{
+    var r=await fetch(API+'/oh-submit',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body:form({u:c.u,p:c.p,author:c.name,title:title,body:body})});
+    var d=await r.json();
+    if(d.ok){ m.textContent='✨ Published.'; m.className='msg ok'; document.getElementById('t-title').value='';document.getElementById('t-body').value=''; loadFeed(); }
+    else { m.textContent='Could not publish — please sign in again.'; m.className='msg err'; }
+  }catch(e){ m.textContent='Could not reach the server.'; m.className='msg err'; }
+}
+
+var _rows=[];
+async function loadFeed(){
+  var c=creds(); var feed=document.getElementById('feed');
+  try{
+    var r=await fetch(API+'/oh-list',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:form(c?{u:c.u,p:c.p}:{})});
+    var rows=await r.json(); _rows=rows;
+    if(!rows.length){ feed.innerHTML='<div class="empty">No writings yet. Be the first to share something.</div>'; return; }
+    var isAdmin=c&&c.role==='admin';
+    feed.innerHTML=rows.map(function(w){
+      var when=w.created_at?new Date(w.created_at).toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'}):'';
+      var tag=w.status&&w.status!=='published'?'<span class="tag">'+esc(w.status)+'</span>':'';
+      var del=isAdmin?'<button class="del" onclick="del('+w.id+')">Delete</button>':'';
+      return '<div class="piece" id="w'+w.id+'"><h3>'+esc(w.title)+tag+'</h3><div class="by">by '+esc(w.author||w.handle)+' · '+esc(when)+'</div>'+
+        '<div class="body">'+esc(w.body)+'</div><div class="pfoot"><button class="sharebtn" onclick="shareWriting('+w.id+')">↗ Share</button>'+del+'</div></div>';
+    }).join('');
+    if(location.hash){ var el=document.getElementById(location.hash.slice(1)); if(el)el.scrollIntoView({behavior:'smooth',block:'center'}); }
+  }catch(e){ feed.innerHTML='<div class="empty err">Could not load writings.</div>'; }
+}
+function shareWriting(id){
+  var w=_rows.filter(function(x){return x.id===id})[0]; if(!w)return;
+  var url=location.origin+location.pathname+'#w'+id;
+  if(window.gpgvShare) gpgvShare({title:w.title,text:'“'+w.title+'” by '+(w.author||w.handle)+' — Open Hearts Writers’ Room',url:url});
+  else { navigator.clipboard&&navigator.clipboard.writeText(url); alert('Link copied: '+url); }
+}
+async function del(id){
+  var c=creds(); if(!c||c.role!=='admin')return; if(!confirm('Delete this writing?'))return;
+  await fetch(API+'/oh-delete',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:form({u:c.u,p:c.p,id:id})});
+  loadFeed();
+}
+function render(){
+  var c=creds();
+  document.getElementById('loginCard').style.display=c?'none':'block';
+  document.getElementById('composer').style.display=c?'block':'none';
+  if(c){ document.getElementById('hello').textContent='Welcome, '+c.name+(c.role==='admin'?' (admin)':''); }
+  loadFeed();
+}
+render();
+</script>
+<script src="gpgv-edit.js"></script>
+</body></html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GPGV — Site Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=JetBrains+Mono&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root{--bg:#0a0710;--card:#15121c;--ink:#f3eee2;--dim:#a59db4;--gold:#e3b341;--cyan:#19d3ff;--line:#272233}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter Tight',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  .wrap{max-width:880px;margin:0 auto;padding:28px}
+  h1{font-family:'Fraunces',serif;font-size:2.1rem;margin-bottom:4px}
+  .sub{color:var(--dim);margin-bottom:24px}
+  .gate{max-width:360px;margin:80px auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:30px;text-align:center}
+  .gate input{width:100%;padding:12px;margin:14px 0;background:#0a0710;border:1px solid var(--line);border-radius:8px;color:var(--ink);font-size:15px}
+  .btn{background:linear-gradient(100deg,var(--cyan),#5b8cff);color:#04121a;border:0;border-radius:8px;padding:12px 18px;font-weight:700;cursor:pointer;font-size:14px}
+  .btn.g{background:var(--gold)} .btn.alt{background:transparent;border:1px solid var(--line);color:var(--ink)}
+  .pages{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:18px 0 30px}
+  .p{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;border-left:3px solid var(--col)}
+  .p .nm{font-weight:600;font-size:15px}.p .fn{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim);margin:4px 0 12px}
+  .p a{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cyan);text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:7px 11px;margin-right:6px}
+  .p a:hover{border-color:var(--cyan)}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin:14px 0}
+  .panel h2{font-size:1.1rem;margin-bottom:6px}.panel p{color:var(--dim);font-size:13.5px;line-height:1.6;margin-bottom:14px}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  textarea{width:100%;min-height:120px;background:#0a0710;border:1px solid var(--line);border-radius:8px;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:12px;padding:12px;margin-top:8px}
+  .note{font-size:12px;color:#8a7280;line-height:1.6;margin-top:8px}
+  .ok{color:#7ee0a0}
+</style>
+</head>
+<body>
+<div id="gate" class="gate">
+  <h1 style="font-size:1.5rem">GPGV Manager</h1>
+  <p class="sub" style="margin:6px 0 0">Enter admin password</p>
+  <input type="password" id="pw" placeholder="Password" onkeydown="if(event.key==='Enter')enter()"/>
+  <button class="btn" onclick="enter()" style="width:100%">Open →</button>
+</div>
+
+<div id="app" class="wrap" style="display:none">
+  <h1>Site Manager</h1>
+  <p class="sub">Edit any page by clicking its text. Changes save in your browser instantly; publish with Export.</p>
+
+  <div class="pages" id="pageList"></div>
+
+  <div class="panel">
+    <h2>🌐 Publish LIVE — one click, everyone sees it</h2>
+    <p>Edit any page (click <b>✎ Edit page</b>), then come back here and hit <b>Publish LIVE</b>. Your changes go to the GPGV server and <b>every visitor on gpgv.ca sees them instantly</b> — no files, no uploads.</p>
+    <div class="row">
+      <button class="btn g" onclick="publishLive()">🌐 Publish LIVE to gpgv.ca</button>
+      <button class="btn alt" onclick="exportJSON()">⬇ Export backup file</button>
+      <button class="btn alt" onclick="document.getElementById('imp').style.display='block'">Import / paste JSON</button>
+      <button class="btn alt" onclick="clearAll()">Clear my local edits</button>
+    </div>
+    <div id="imp" style="display:none">
+      <textarea id="impText" placeholder="Paste a gpgv-content.json here…"></textarea>
+      <button class="btn" onclick="importJSON()" style="margin-top:8px">Apply</button>
+    </div>
+    <p class="note" id="status"></p>
+  </div>
+
+  <div class="panel">
+    <h2>📇 Contacts &amp; signups <span style="font-size:12px;color:var(--dim);font-weight:400">— everyone who reached out, from every page</span></h2>
+    <p>Every contact form, club application, and newsletter signup across gpgv.ca lands here and texts you instantly. This is your live contact database.</p>
+    <div class="row" style="margin-bottom:10px">
+      <button class="btn" onclick="loadContacts()">↻ Refresh contacts</button>
+      <button class="btn alt" onclick="exportContacts()">⬇ Export CSV</button>
+      <span id="cStatus" class="note" style="margin:0;align-self:center"></span>
+    </div>
+    <div id="contactsBox" style="overflow:auto;max-height:420px;border:1px solid var(--line);border-radius:8px"></div>
+  </div>
+
+  <div class="panel">
+    <h2>How it works</h2>
+    <p>• <b>Edit page</b> opens it with a blue edit bar — click any headline, paragraph, price, or link text to change it. Double-click a link to change where it points.<br/>
+    • Edits auto-save to your browser and preview live.<br/>
+    • <b>Export</b> bundles every change into one <code>gpgv-content.json</code>. Drop that file in the site folder to publish for all visitors.<br/>
+    • <b>Reset page</b> (in the edit bar) undoes a page's changes.</p>
+  </div>
+</div>
+
+<script>
+var PAGES=[
+  {nm:'Home (Hub)',fn:'index.html',c:'#e3b341'},
+  {nm:'D.R.A.I.S.Y.',fn:'drais.html',c:'#ff8a1c'},
+  {nm:'Secret Pocket',fn:'secret-pocket.html',c:'#7a2e2e'},
+  {nm:'GPGV Social Club',fn:'social-club.html',c:'#c9a227'},
+  {nm:'9 Stories Publishing',fn:'nine-stories.html',c:'#7a2e2e'},
+  {nm:'Bassbed',fn:'bassbed.html',c:'#19d3ff'},
+  {nm:'Showcase',fn:'showcase.html',c:'#e06a2e'},
+  {nm:'The Gallery',fn:'gallery.html',c:'#9b7bff'},
+  {nm:'The Apps',fn:'apps.html',c:'#19d3ff'},
+  {nm:'Nameology',fn:'nameology.html',c:'#9b7bff'},
+  {nm:'Open Hearts',fn:'relationships.html',c:'#e8728f'}
+];
+var API="https://n8n-production-c95fe.up.railway.app/webhook";
+var PW="Dreplay2$$$";
+function enter(){
+  if(document.getElementById('pw').value!=='Dreplay2$$$'){ alert('Wrong password'); return; }
+  sessionStorage.setItem('gpgv_admin','1');
+  document.getElementById('gate').style.display='none';
+  document.getElementById('app').style.display='block';
+  render();
+}
+if(sessionStorage.getItem('gpgv_admin')==='1'){ document.getElementById('gate').style.display='none'; document.getElementById('app').style.display='block'; window.addEventListener('load',render); }
+function render(){
+  document.getElementById('pageList').innerHTML=PAGES.map(function(p){
+    return '<div class="p" style="--col:'+p.c+'"><div class="nm">'+p.nm+'</div><div class="fn">'+p.fn+'</div>'+
+      '<a href="'+p.fn+'?edit=1" target="_blank">✎ Edit page</a><a href="'+p.fn+'" target="_blank">View</a></div>';
+  }).join('');
+  loadContacts();
+}
+function loadLocal(){ try{return JSON.parse(localStorage.getItem('gpgv_edits'))||{}}catch(e){return {}} }
+function exportJSON(){
+  var blob=new Blob([JSON.stringify(loadLocal(),null,2)],{type:'application/json'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='gpgv-content.json'; a.click();
+  status('Exported. Upload gpgv-content.json to the site folder to publish.');
+}
+function importJSON(){
+  try{ var d=JSON.parse(document.getElementById('impText').value); localStorage.setItem('gpgv_edits',JSON.stringify(d)); status('Imported ✓'); }
+  catch(e){ status('Invalid JSON.'); }
+}
+function clearAll(){ if(confirm('Clear ALL local edits on every page?')){ localStorage.removeItem('gpgv_edits'); status('Cleared.'); } }
+function status(t){ document.getElementById('status').innerHTML='<span class="ok">'+t+'</span>'; }
+
+async function publishLive(){
+  var edits=loadLocal();
+  if(!Object.keys(edits).length){ if(!confirm('No local edits found in this browser. Publish anyway (this would clear live edits)?')) return; }
+  status('Publishing live…');
+  try{
+    var body=new URLSearchParams(); body.set('key',PW); body.set('payload',JSON.stringify(edits));
+    var r=await fetch(API+'/gpgv-content-save',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body.toString()});
+    if(r.ok){ status('🌐 LIVE — every visitor on gpgv.ca now sees your changes.'); }
+    else{ status('Publish failed (HTTP '+r.status+'). Edits are still saved locally — try Export backup.'); }
+  }catch(e){ status('Could not reach the publish server. Edits saved locally; try again or Export.'); }
+}
+
+var _contacts=[];
+async function loadContacts(){
+  var box=document.getElementById('contactsBox'); var cs=document.getElementById('cStatus');
+  cs.textContent='Loading…';
+  try{
+    var r=await fetch(API+'/gpgv-contacts?key='+encodeURIComponent(PW),{cache:'no-store'});
+    var rows=await r.json(); _contacts=Array.isArray(rows)?rows:[];
+    if(!_contacts.length){ box.innerHTML='<p style="padding:18px;color:var(--dim)">No contacts yet. New signups from any page will appear here.</p>'; cs.textContent=''; return; }
+    var esc=function(s){return String(s==null?'':s).replace(/[<>&]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c];});};
+    var h='<table style="width:100%;border-collapse:collapse;font-size:13px">'+
+      '<thead><tr style="text-align:left;color:var(--dim);font-family:JetBrains Mono,monospace;font-size:11px">'+
+      '<th style="padding:8px">When</th><th style="padding:8px">Name</th><th style="padding:8px">Email</th><th style="padding:8px">Phone</th><th style="padding:8px">Source</th><th style="padding:8px">Notes</th></tr></thead><tbody>';
+    _contacts.forEach(function(c){
+      var when=c.created_at?new Date(c.created_at).toLocaleString():'';
+      h+='<tr style="border-top:1px solid var(--line)">'+
+        '<td style="padding:8px;white-space:nowrap;color:var(--dim)">'+esc(when)+'</td>'+
+        '<td style="padding:8px">'+esc(c.name)+'</td>'+
+        '<td style="padding:8px">'+esc(c.email)+'</td>'+
+        '<td style="padding:8px">'+esc(c.phone)+'</td>'+
+        '<td style="padding:8px">'+esc(c.business)+'</td>'+
+        '<td style="padding:8px;color:var(--dim)">'+esc(c.notes)+'</td></tr>';
+    });
+    box.innerHTML=h+'</tbody></table>'; cs.textContent=_contacts.length+' contact'+(_contacts.length>1?'s':'');
+  }catch(e){ box.innerHTML='<p style="padding:18px;color:#e8728f">Could not load contacts (server unreachable).</p>'; cs.textContent=''; }
+}
+function exportContacts(){
+  if(!_contacts.length){ return; }
+  var cols=['created_at','name','email','phone','business','industry','notes'];
+  var csv=cols.join(',')+'\n'+_contacts.map(function(c){return cols.map(function(k){return '"'+String(c[k]==null?'':c[k]).replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  var a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download='gpgv-contacts.csv'; a.click();
+}
+</script>
+</body></html>
